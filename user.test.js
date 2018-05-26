@@ -1,9 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import User from './user'
-import fetchMock from 'fetch-mock'
+import * as api from './api'
 
-const nextTick = async() => {
+const nextTick = async () => {
   return new Promise(resolve => {
     setTimeout(resolve, 0)
   })
@@ -15,15 +15,22 @@ const dummyUser = {
   website: 'https://javascriptplayground.com',
 }
 
-const url = 'https://jsonplaceholder.typicode.com/users/1'
-
-const mockUrlWithUser = user => fetchMock.getOnce(url, {
-  status: 200,
-  body: user,
-})
+// jest will spy on when fetchUser is called and what it's called with
+// jest spys are not disposed between tests, need to call restoreAllMocks()
+const mockFetchUserResponse = user =>
+  jest
+    .spyOn(api, 'fetchUser')
+    .mockImplementation(() => {
+      return Promise.resolve(dummyUser)
+    })
 
 describe('User', () => {
-  it('shows the loading text before the data is fetched', async () => {
+  beforeEach(() => {
+    // reset all spies between tests
+    jest.restoreAllMocks()
+  })
+
+  it.skip('shows the loading text before the data is fetched', async () => {
     // getOnce  - once a call is made to the mocked API the stub is cleared away
     //          - prevent other tests also calling the mocked API
     mockUrlWithUser(dummyUser)
@@ -33,7 +40,7 @@ describe('User', () => {
     expect(wrapper.find('p').text()).toEqual('Loading!')
   })
 
-  it('shows the data once it has been fetched', async () => {
+  it.skip('shows the data once it has been fetched', async () => {
     // getOnce  - once a call is made to the mocked API the stub is cleared away
     //          - prevent other tests also calling the mocked API
     mockUrlWithUser(dummyUser)
@@ -48,10 +55,24 @@ describe('User', () => {
     wrapper.update()
 
     expect(wrapper.find('h4').text()).toEqual(dummyUser.name)
-    expect(wrapper.find('p').text()).toContain (dummyUser.website )
+    expect(wrapper.find('p').text()).toContain(dummyUser.website)
   })
 
-  afterEach(() => {
-    fetchMock.restore()
+  it('shows the loading text before the data is fetched', async () => {
+    mockFetchUserResponse(dummyUser)
+
+    const wrapper = shallow(<User id={1} />)
+    expect(wrapper.find('p').text()).toEqual('Loading!')
+  })
+
+  it('shows the data once it has been fetched', async () => {
+    mockFetchUserResponse(dummyUser)
+    const wrapper = shallow(<User id={1} />)
+
+    await nextTick()
+    wrapper.update()
+
+    expect(wrapper.find('h4').text()).toEqual(dummyUser.name)
+    expect(wrapper.find('p').text()).toContain(dummyUser.website)
   })
 })
