@@ -1,0 +1,41 @@
+{
+  "name": "testing-react-with-enzyme-and-jest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Squaretechre/testing-react-with-enzyme-and-jest.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Squaretechre/testing-react-with-enzyme-and-jest/issues"
+  },
+  "homepage": "https://github.com/Squaretechre/testing-react-with-enzyme-and-jest#readme",
+  "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.49",
+    "@babel/preset-env": "^7.0.0-beta.49",
+    "@babel/preset-react": "^7.0.0-beta.49",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "react": "16.4.0",
+    "react-dom": "16.4.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.49",
+    "babel-core": "^7.0.0-0",
+    "babel-jest": "^23.0.0",
+    "babel-preset-env": "1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "6.24.1",
+    "enzyme": "3.3.0",
+    "enzyme-adapter-react-16": "1.1.1",
+    "jest": "23.0.0",
+    "prettier": "1.12.1",
+    "regenerator-runtime": "^0.11.1"
+  }
+}
