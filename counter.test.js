@@ -1,8 +1,17 @@
 import React from 'react'
 import Counter from './counter'
 import { shallow } from 'enzyme'
+import renderer from 'react-test-renderer'
 
 describe('Counter component', () => {
+  it('matches the snapshot', () => {
+    // react-test-renderer  - creates a JSON representation of how a component renders and stores it as a snapshot
+    //                      - to compare against in future tests. use for quick notification of output of a component
+    //                      - being changed. can use 'u' to update the snapshot if change is desired
+    const tree = renderer.create(<Counter />).toJSON()
+    expect(tree).toMatchSnapshot()
+  })
+
   it('starts with a count of 0 - checking component state', () => {
 
     // shallow  - component not full rendered into DOM, but creates a JSON representation of what would be rendered,
